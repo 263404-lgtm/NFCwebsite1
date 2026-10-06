@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>조청과 시루 — 한국 전통 간식 사전</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1E9D8; --paper-deep:#E9DFC9; --ink:#2B2620; --ink-soft:#5B5347;
+    --line:#D8CBAA; --dahong:#B8402A; --cheong:#2E4A63; --yuja:#C99A2E; --song:#5F7052;
+    --white-dot:#F7F2E6;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:inherit;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper); background-image:radial-gradient(circle at 1px 1px, rgba(43,38,32,0.05) 1px, transparent 1px); background-size:14px 14px;
+    color:var(--ink); font-family:'Noto Sans KR',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){--paper:#211D18;--paper-deep:#2A251E;--ink:#EDE4D3;--ink-soft:#B9AD97;--line:#453D30;--white-dot:#2A251E;}
+  }
+  :root[data-theme="dark"]{--paper:#211D18;--paper-deep:#2A251E;--ink:#EDE4D3;--ink-soft:#B9AD97;--line:#453D30;--white-dot:#2A251E;}
+
+  .stripe{height:6px;width:100%;background:repeating-linear-gradient(90deg,var(--dahong) 0 8%,var(--yuja) 8% 16%,var(--cheong) 16% 24%,var(--song) 24% 32%,var(--ink) 32% 40%);background-size:220px 100%;}
+
+  header{max-width:760px;margin:0 auto;padding:48px 24px 24px;}
+  .eyebrow-mark{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .eyebrow-mark span{font-family:'Noto Serif KR',serif;font-size:13px;letter-spacing:.08em;color:var(--ink-soft);}
+  h1{font-family:'Noto Serif KR',serif;font-weight:700;font-size:clamp(30px,5.5vw,46px);margin:0 0 12px;line-height:1.28;}
+  h1 em{font-style:normal;color:var(--dahong);}
+  header p.lead{max-width:60ch;font-size:15.5px;color:var(--ink-soft);margin:0 0 22px;}
+
+  .search-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  #search{flex:1 1 240px;background:var(--white-dot);border:1px solid var(--line);padding:12px 16px;font-size:15px;font-family:'Noto Sans KR',sans-serif;color:var(--ink);outline:none;}
+  #search:focus{border-color:var(--dahong);}
+  #search::placeholder{color:var(--ink-soft);}
+  .count-badge{font-family:'Noto Serif KR',serif;font-size:13.5px;color:var(--ink-soft);white-space:nowrap;}
+  .count-badge b{color:var(--dahong);font-weight:700;}
+
+  nav.cat-nav{max-width:760px;margin:0 auto;padding:14px 24px 0;display:flex;flex-wrap:wrap;gap:8px;}
+  nav.cat-nav button{font:inherit;background:none;text-decoration:none;font-size:13px;color:var(--ink-soft);border:1px solid var(--line);padding:6px 13px;border-radius:999px;cursor:pointer;}
+  nav.cat-nav button.active,nav.cat-nav button:hover{border-color:var(--dahong);color:var(--dahong);}
+
+  /* 명소 섹션 */
+  .spots{max-width:760px;margin:28px auto 0;padding:0 24px;}
+  .spots-box{border:1px solid var(--line);background:var(--white-dot);padding:18px 20px;}
+  .spots-box h2{font-family:'Noto Serif KR',serif;font-size:16px;margin:0 0 4px;}
+  .spots-box .sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;}
+  .spot-item{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px;}
+  .spot-item:first-of-type{border-top:none;}
+  .spot-item .sname{font-weight:600;}
+  .spot-item .saddr{color:var(--ink-soft);font-size:12.5px;}
+  .near-btn{display:inline-block;margin-top:14px;font-size:13px;color:var(--dahong);border:1px solid var(--dahong);padding:8px 16px;text-decoration:none;border-radius:999px;}
+  .near-btn:hover{background:var(--dahong);color:var(--white-dot);}
+
+  main{max-width:760px;margin:0 auto;padding:24px 24px 100px;}
+  .dict-list{border-top:1px solid var(--line);}
+  .entry{border-bottom:1px solid var(--line);padding:14px 4px;display:flex;align-items:baseline;justify-content:space-between;gap:14px;cursor:pointer;background:none;width:100%;text-align:left;font-family:inherit;color:inherit;}
+  .entry:hover{background:var(--paper-deep);}
+  .entry .left{display:flex;align-items:baseline;gap:12px;min-width:0;}
+  .entry .idx{font-family:'Noto Serif KR',serif;font-size:12px;color:var(--cat-color,var(--dahong));flex-shrink:0;width:18px;}
+  .entry .name{font-family:'Noto Serif KR',serif;font-weight:700;font-size:17px;flex-shrink:0;}
+  .entry .feat{font-size:12.5px;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .entry .cat{font-size:11px;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:2px 9px;flex-shrink:0;}
+
+  .empty-msg{padding:60px 0;text-align:center;color:var(--ink-soft);font-family:'Noto Serif KR',serif;font-size:16px;}
+
+  /* 위에서 떨어지는 상세 모달 */
+  .overlay{position:fixed;inset:0;background:rgba(20,17,12,0.45);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:40;}
+  .overlay.show{opacity:1;pointer-events:auto;}
+  .drop-card{position:fixed;top:0;left:50%;width:min(560px,92vw);max-height:82vh;overflow-y:auto;
+    background:var(--paper-deep);border:1px solid var(--dahong);border-top:none;
+    transform:translate(-50%,-110%);transition:transform .38s cubic-bezier(.22,1.4,.4,1);z-index:41;
+    padding:26px 26px 22px;padding-top:calc(26px + env(safe-area-inset-top,0px));}
+  .drop-card.show{transform:translate(-50%,0);}
+  .drop-card .dc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px;}
+  .drop-card h3{font-family:'Noto Serif KR',serif;font-size:24px;margin:0;}
+  .drop-card .dc-cat{font-size:12px;color:var(--ink-soft);margin-top:4px;}
+  .drop-card .close-x{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 14px;font-size:12.5px;color:var(--ink-soft);cursor:pointer;font-family:inherit;}
+  .drop-card .close-x:hover{border-color:var(--dahong);color:var(--dahong);}
+  .drop-card .block{margin-bottom:14px;}
+  .drop-card .field-label{font-size:11.5px;font-weight:700;color:var(--dahong);margin-bottom:5px;}
+  .drop-card .field-value{font-size:14.5px;}
+
+  footer{max-width:760px;margin:0 auto;padding:30px 24px 60px;color:var(--ink-soft);font-size:12px;border-top:1px solid var(--line);}
+  ::selection{background:var(--yuja);color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+
+<header>
+  <div class="eyebrow-mark">
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.3" style="color:var(--ink-soft)"/>
+      <path d="M10 1 A9 9 0 0 1 10 19 A4.5 4.5 0 0 1 10 10 A4.5 4.5 0 0 0 10 1 Z" fill="var(--dahong)"/>
+      <path d="M10 19 A9 9 0 0 1 10 1 A4.5 4.5 0 0 1 10 10 A4.5 4.5 0 0 0 10 19 Z" fill="var(--cheong)"/>
+    </svg>
+    <span>전통 간식 사전</span>
+  </div>
+  <h1>가나다순으로 찾는<br><em>우리 전통 간식</em></h1>
+  <p class="lead">이름을 눌러보세요 — 사전을 펼치듯, 그 간식의 만드는 법과 재료·맛·유래가 위에서 펼쳐집니다.</p>
+  <div class="search-row">
+    <input id="search" type="text" placeholder="이름으로 찾기 — 예) 약과, 인절미">
+    <div class="count-badge" id="countBadge"></div>
+  </div>
+</header>
+
+<nav class="cat-nav" id="catNav"></nav>
+
+<section class="spots">
+  <div class="spots-box">
+    <h2>실제로 가볼 만한 곳</h2>
+    <div class="sub">오래도록 전통 방식을 지켜온 곳들 (조사 기준 일부만 소개)</div>
+    <div id="spotList"></div>
+    <a class="near-btn" id="nearBtn" href="https://www.google.com/maps/search/?api=1&query=전통%20한과%20떡집" target="_blank" rel="noopener">내 주변 떡집·한과점 찾기 →</a>
+  </div>
+</section>
+
+<main>
+  <div id="countLine" style="font-size:12.5px;color:var(--ink-soft);margin-bottom:6px;"></div>
+  <div class="dict-list" id="dictList"></div>
+</main>
+
+<div class="overlay" id="overlay"></div>
+<div class="drop-card" id="dropCard"></div>
+
+<footer>
+  이름 가나다순으로 정리했습니다. 재료·만드는 법은 대표적인 방식을 간략히 정리한 것이며 지역·집안마다 다를 수 있습니다. 가게 정보는 조사 시점 기준이므로 방문 전 영업시간을 확인해 주세요.
+</footer>
+
+<script>
+const DATA = [
+{name:"약과",category:"한과",feature:"밀가루와 꿀을 사용하며 달콤하고 고소한 맛이 특징이다.",method:"밀가루에 참기름과 꿀 등을 넣어 반죽한 뒤 모양을 내고 기름에 튀긴 다음 꿀이나 조청에 담근다.",history:"고려시대부터 불교 행사와 제사에 쓰인 대표적인 한과로 알려져 있다.",pair:"따뜻한 수정과나 식혜와 함께 먹으면 좋다.",art:'<svg width="100%" viewBox="0 0 300 220" role="img"><title>약과 일러스트</title><desc>마름모 모양의 황금빛 약과와 잣 장식</desc><defs><clipPath id="yg"><path d="M0,-63 Q69,-35 92,0 Q69,35 0,63 Q-69,35 -92,0 Q-69,-35 0,-63 Z" transform="translate(150,110)"/></clipPath></defs><ellipse cx="150" cy="150" rx="120" ry="34" fill="#F1E9D8" stroke="#D8CBAA" stroke-width="2"/><path d="M0,-63 Q69,-35 92,0 Q69,35 0,63 Q-69,35 -92,0 Q-69,-35 0,-63 Z" transform="translate(150,110)" fill="#C98A3B" stroke="#7A4A1C" stroke-width="2.5"/><g clip-path="url(#yg)" stroke="#E3A857" stroke-width="2.5" opacity="0.65"><line x1="10" y1="20" x2="170" y2="180"/><line x1="45" y1="20" x2="205" y2="180"/><line x1="80" y1="20" x2="240" y2="180"/><line x1="115" y1="20" x2="275" y2="180"/><line x1="150" y1="20" x2="310" y2="180"/><line x1="170" y1="20" x2="10" y2="180"/><line x1="205" y1="20" x2="45" y2="180"/><line x1="240" y1="20" x2="80" y2="180"/><line x1="275" y1="20" x2="115" y2="180"/><line x1="310" y1="20" x2="150" y2="180"/></g><ellipse cx="110" cy="70" rx="40" ry="14" fill="#FFFFFF" opacity="0.12" transform="rotate(-18 110 70)"/><ellipse cx="150" cy="68" rx="8" ry="5" fill="#EEE2C1" stroke="#C9B983" stroke-width="1.2"/></svg>'},
+{name:"강정",category:"한과",feature:"찹쌀을 바탕으로 만들며 겉에 깨나 콩가루 등을 묻혀 바삭하고 고소하다.",method:"찹쌀가루로 반죽을 만들어 익힌 뒤 말리고 튀겨 조청을 묻힌 다음 깨나 콩가루 등을 붙인다.",history:"혼례와 명절 잔치상에 빠지지 않던 한과로 조선시대 문헌에도 자주 등장한다.",pair:"고소한 맛이 진한 편이라 개운한 유자차와 잘 어울린다."},
+{name:"유과",category:"한과",feature:"찹쌀을 이용해 만들며 가볍고 바삭한 식감이 특징이다.",method:"찹쌀 반죽을 쪄서 말린 뒤 기름에 튀기고 조청을 묻혀 고물을 붙인다.",history:"조선 왕실과 반가에서 제사와 명절 음식으로 즐겨 만들던 한과이다.",pair:"떫은 맛을 잡아주는 녹차와 함께 먹으면 좋다."},
+{name:"다식",category:"한과",feature:"콩가루, 깨가루, 송홧가루 등을 이용하며 작고 다양한 문양이 특징이다.",method:"가루 재료에 꿀이나 조청 등을 섞어 반죽한 뒤 다식판에 눌러 모양을 만든다.",history:"제사와 잔치 상차림에 색과 모양을 맞춰 올리던 궁중·반가의 다과이다.",pair:"향긋한 국화차나 오미자차와 잘 어울린다."},
+{name:"인절미",category:"떡",feature:"찹쌀로 만들어 쫄깃하고 콩고물의 고소한 맛이 난다.",method:"찹쌀가루를 찐 뒤 충분히 치대고 먹기 좋은 크기로 잘라 콩고물을 묻힌다.",history:"떡메로 치는 과정 때문에 예로부터 '인절병'이라 불리기도 했다.",pair:"구수한 숭늉이나 식혜와 함께 먹으면 좋다."},
+{name:"송편",category:"떡",feature:"반달 모양이 특징이며 추석에 많이 먹는 떡이다.",method:"쌀가루 반죽을 얇게 펴서 깨, 콩, 밤 등의 소를 넣고 반달 모양으로 빚은 뒤 찐다.",history:"추석에 조상께 올리고 나누어 먹던 절식으로 삼국시대 문헌에서도 유래를 찾을 수 있다.",pair:"은은한 솔향과 어울리는 국화차가 잘 맞는다."},
+{name:"백설기",category:"떡",feature:"하얀색의 담백하고 부드러운 떡이다.",method:"멥쌀가루에 물을 섞어 고르게 만든 뒤 찜기에 넣어 쪄낸다.",history:"아기 백일이나 돌잔치에 무병장수를 기원하며 올리던 떡이다.",pair:"고소한 콩국이나 우유와 함께 먹으면 좋다."},
+{name:"팥시루떡",category:"떡",feature:"쌀가루와 팥을 층층이 쌓아 만드는 떡이다.",method:"멥쌀가루와 삶은 팥을 켜켜이 쌓은 뒤 찜기에 넣어 충분히 찐다."},
+{name:"절편",category:"떡",feature:"얇고 납작하며 떡살로 다양한 문양을 찍어낼 수 있다.",method:"멥쌀가루를 쪄서 치댄 뒤 얇게 펴고 떡살로 문양을 찍어 먹기 좋은 크기로 자른다.",history:"떡살로 문양을 찍어 잔치와 명절 상차림을 화려하게 꾸미던 떡이다.",pair:"구수한 조청에 찍어 먹으면 더 맛있다."},
+{name:"가래떡",category:"떡",feature:"길고 둥근 모양의 흰 떡으로 쫄깃한 식감이 특징이다.",method:"멥쌀가루를 쪄서 반죽한 뒤 길고 둥글게 늘여 만든다.",history:"설날 떡국의 주재료로 한 해의 시작을 기원하며 만들어 먹었다.",pair:"달콤한 꿀이나 조청에 찍어 먹으면 좋다."},
+{name:"꿀떡",category:"떡",feature:"작은 떡 안에 달콤한 꿀이나 설탕 소가 들어간다.",method:"쌀가루 반죽에 꿀이나 설탕을 넣고 동그랗게 빚은 뒤 쪄낸다."},
+{name:"경단",category:"떡",feature:"작고 둥근 모양이며 콩가루나 깨 등을 겉에 묻힌다.",method:"찹쌀가루에 물을 넣어 반죽하고 동그랗게 빚은 뒤 삶아서 콩가루나 깨가루를 묻힌다.",history:"삼짇날 진달래 화전과 함께 즐기던 절식 중 하나로 전해진다.",pair:"구수한 식혜와 곁들이면 좋다."},
+{name:"시루떡",category:"떡",feature:"시루에서 쪄서 만드는 대표적인 전통 떡이다.",method:"쌀가루와 팥 등의 재료를 시루에 켜켜이 넣고 찐다.",history:"액운을 막고 복을 비는 뜻으로 고사상에 자주 올리던 떡이다.",pair:"든든한 맛이라 구수한 숭늉과 잘 어울린다."},
+{name:"증편",category:"떡",feature:"발효시킨 쌀가루를 이용해 부드럽고 폭신한 식감이 난다.",method:"쌀가루 반죽에 발효 과정을 거친 뒤 찜기에 넣어 쪄낸다.",history:"여름철 쉽게 상하지 않도록 발효시켜 만든 지혜가 담긴 떡이다.",pair:"시원한 수정과와 함께 먹으면 잘 어울린다."},
+{name:"무지개떡",category:"떡",feature:"여러 색의 떡을 층층이 쌓아 무지개처럼 보이는 것이 특징이다.",method:"쌀가루를 여러 색으로 나누어 각각 준비한 뒤 색깔별로 층층이 쌓아 찐다."},
+{name:"약식",category:"떡",feature:"찹쌀에 대추, 밤, 잣 등을 넣고 달콤하게 만든다.",method:"찹쌀을 익힌 뒤 꿀이나 간장, 참기름 등을 넣고 대추와 밤 등을 섞어 다시 익힌다.",history:"신라시대 까마귀에게 감사하며 지어 먹었다는 설화에서 유래했다고 전해진다.",pair:"고소한 잣이 들어가 있어 유자차와 잘 어울린다."},
+{name:"두텁떡",category:"떡",feature:"팥과 견과류 등을 넣어 두툼하게 만드는 전통 떡이다.",method:"찹쌀가루와 팥소, 견과류 등을 층층이 올려 쪄낸다.",history:"궁중에서 왕의 떡이라 불릴 만큼 정성이 많이 들어간 고급 떡이다.",pair:"은은한 수정과와 함께 먹으면 좋다."},
+{name:"화전",category:"떡",feature:"떡 위에 꽃잎을 올려 아름답게 장식하는 것이 특징이다.",method:"찹쌀가루 반죽을 작게 빚어 기름에 지지고 식용 꽃잎을 올린다.",history:"삼짇날과 중양절에 꽃을 즐기며 만들어 먹던 절식이다.",pair:"봄기운을 살리는 진달래차나 국화차와 잘 어울린다."},
+{name:"부꾸미",category:"떡",feature:"얇은 찹쌀 반죽에 달콤한 소를 넣어 지져 만든다.",method:"찹쌀가루로 반죽을 만든 뒤 얇게 펴고 팥소 등을 넣어 반달 모양으로 접어 지진다."},
+{name:"주악",category:"떡",feature:"찹쌀 반죽에 소를 넣어 기름에 지지는 전통 떡이다.",method:"찹쌀가루 반죽에 소를 넣고 둥글게 빚은 뒤 기름에 지져 만든다."},
+{name:"송화다식",category:"한과",feature:"송홧가루를 이용하며 은은한 향과 고운 노란색이 특징이다.",method:"송홧가루에 꿀 등을 섞어 반죽하고 다식판에 눌러 모양을 만든다."},
+{name:"흑임자다식",category:"한과",feature:"검은깨를 사용해 고소한 맛과 짙은 색이 특징이다.",method:"볶은 검은깨를 곱게 갈아 꿀과 섞은 뒤 다식판에 눌러 만든다."},
+{name:"콩다식",category:"한과",feature:"콩가루를 이용해 고소하고 담백한 맛이 난다.",method:"볶은 콩을 갈아 만든 콩가루에 꿀을 넣어 반죽한 뒤 다식판에 찍는다."},
+{name:"깨강정",category:"한과",feature:"깨가 많이 들어가 고소하고 바삭한 맛이 특징이다.",method:"볶은 깨에 조청이나 꿀을 섞고 굳힌 뒤 적당한 크기로 자른다."},
+{name:"콩강정",category:"한과",feature:"볶은 콩을 사용해 바삭하고 고소하다.",method:"볶은 콩에 조청을 섞어 뭉친 뒤 식혀서 잘라낸다."},
+{name:"호두강정",category:"한과",feature:"호두의 고소한 맛과 조청의 달콤함이 어우러진다.",method:"호두를 볶은 뒤 조청을 넣고 버무려 굳힌다."},
+{name:"잣강정",category:"한과",feature:"잣의 향과 고소함이 특징인 전통 과자이다.",method:"잣을 준비해 조청과 섞은 뒤 틀에 눌러 굳힌다."},
+{name:"매작과",category:"한과",feature:"반죽을 꼬아 꽃이나 나비처럼 만든 모양이 특징이다.",method:"밀가루 반죽을 얇게 밀어 칼집을 내고 꼬아 기름에 튀긴 뒤 꿀이나 조청을 묻힌다."},
+{name:"타래과",category:"한과",feature:"반죽을 길게 꼬아 만든 독특한 모양이 특징이다.",method:"밀가루 반죽을 길게 잘라 꼬아 기름에 튀긴 후 조청을 입힌다."},
+{name:"산자",category:"한과",feature:"부풀린 찹쌀 과자에 고물을 묻혀 만든다.",method:"찹쌀 반죽을 말린 뒤 튀겨 부풀리고 조청을 바른 다음 고물을 묻힌다."},
+{name:"빙사과",category:"한과",feature:"얇고 바삭한 한과에 조청의 달콤함이 더해진다.",method:"얇게 만든 반죽을 기름에 튀긴 뒤 조청을 묻혀 만든다."},
+{name:"정과",category:"한과",feature:"과일이나 뿌리채소를 꿀이나 조청에 졸여 만든다.",method:"재료를 손질한 뒤 꿀이나 조청에 넣고 약한 불에서 천천히 졸인다.",history:"제사와 잔치상의 입가심 음식이자 약과 함께 먹는 보양식으로도 쓰였다.",pair:"쌉쌀한 작설차와 잘 어울린다."},
+{name:"연근정과",category:"정과",feature:"연근의 아삭한 식감과 달콤한 조청 맛이 특징이다.",method:"연근을 삶아 손질한 뒤 조청이나 꿀에 넣고 천천히 졸인다."},
+{name:"생강정과",category:"정과",feature:"생강 특유의 향과 달콤한 맛이 특징이다.",method:"생강을 얇게 썰어 데친 뒤 꿀이나 조청에 넣고 졸인다."},
+{name:"도라지정과",category:"정과",feature:"도라지를 달콤하게 졸여 만드는 전통 음식이다.",method:"도라지를 손질하고 삶은 뒤 꿀이나 조청에 넣어 천천히 졸인다."},
+{name:"모과정과",category:"정과",feature:"모과의 향긋한 향과 달콤한 맛이 특징이다.",method:"모과를 얇게 썰어 꿀이나 조청에 넣고 충분히 졸인다."},
+{name:"유자정과",category:"정과",feature:"유자의 상큼한 향과 달콤한 맛이 특징이다.",method:"유자 껍질을 손질해 설탕이나 꿀에 넣고 천천히 졸인다."},
+{name:"대추정과",category:"정과",feature:"대추의 달콤한 맛과 쫀득한 식감이 특징이다.",method:"대추를 손질한 뒤 꿀이나 조청에 넣고 졸인다."},
+{name:"배숙",category:"전통음료·후식",feature:"배와 생강을 이용해 달콤하면서 향긋한 맛을 낸다.",method:"배에 후추 등을 넣고 생강을 끓인 물에 넣어 익힌 뒤 차갑게 식혀 먹는다."},
+{name:"수정과",category:"전통음료",feature:"계피와 생강의 향이 나며 곶감과 잣을 곁들이는 것이 특징이다.",method:"생강과 계피를 각각 끓여 우린 뒤 합쳐 설탕을 넣고 식힌 다음 곶감과 잣을 올린다.",history:"조선시대부터 명절과 잔치 후 입가심 음료로 즐겨 마셨다.",pair:"고소한 한과나 유과와 함께 먹으면 잘 어울린다."},
+{name:"오미자화채",category:"전통음료",feature:"오미자의 새콤한 맛과 붉은 색이 특징이다.",method:"오미자를 물에 우려낸 뒤 꿀이나 설탕을 넣고 배와 잣을 띄운다."},
+{name:"유자화채",category:"전통음료",feature:"유자의 상큼한 향과 배의 달콤한 맛이 어우러진다.",method:"유자즙과 꿀물을 섞고 얇게 썬 유자와 배를 넣어 차갑게 만든다."},
+{name:"배화채",category:"전통음료",feature:"배를 이용해 시원하고 달콤하게 즐기는 전통 화채이다.",method:"배를 얇게 썰거나 모양을 낸 뒤 꿀물이나 과일즙에 띄운다."},
+{name:"수박화채",category:"전통음료",feature:"수박을 이용해 시원하고 달콤하게 즐기는 여름철 화채이다.",method:"수박을 먹기 좋은 크기로 잘라 차가운 화채 국물에 넣는다."},
+{name:"화채",category:"전통음료",feature:"과일이나 꽃 등을 달콤한 물에 띄워 먹는 전통 음료이다.",method:"과일이나 꽃 재료를 준비하고 꿀물이나 과일즙에 넣어 차갑게 만든다."},
+{name:"모약과",category:"한과",feature:"네모난 모양으로 만드는 개성 지역의 약과이다.",method:"밀가루에 참기름과 꿀 등을 넣어 반죽하고 네모나게 잘라 기름에 튀긴 뒤 조청이나 꿀에 담근다."},
+{name:"개성주악",category:"떡",feature:"개성 지역의 전통 떡으로 둥근 모양과 달콤한 맛이 특징이다.",method:"찹쌀가루 반죽에 소를 넣고 둥글게 빚어 기름에 지진 뒤 꿀이나 조청을 묻힌다."},
+{name:"오쟁이떡",category:"떡",feature:"콩이나 팥 등의 소를 넣어 만든 전통 떡이다.",method:"찹쌀가루 반죽에 소를 넣고 모양을 만든 뒤 쪄서 완성한다."},
+{name:"상추떡",category:"떡",feature:"상추를 이용해 만드는 독특한 지역 전통 떡이다.",method:"쌀가루 반죽에 잘게 썬 상추를 섞어 반죽한 뒤 찜기에 넣어 쪄낸다."},
+{name:"쑥떡",category:"떡",feature:"쑥을 넣어 향긋한 향과 초록색을 내는 떡이다.",method:"쑥을 데쳐 잘게 다진 뒤 쌀가루와 섞어 반죽하고 쪄낸다."},
+{name:"쑥절편",category:"떡",feature:"쑥의 향과 초록색이 특징인 절편이다.",method:"쑥과 멥쌀가루를 섞어 찐 뒤 치대고 얇게 펴서 잘라낸다."},
+{name:"수수부꾸미",category:"떡",feature:"수수가루를 이용하며 고소한 맛과 붉은빛이 특징이다.",method:"수수가루로 반죽을 만든 뒤 팥소를 넣고 얇게 빚어 기름에 지진다."},
+{name:"감자송편",category:"떡",feature:"감자를 이용해 만드는 지역 특색이 있는 송편이다.",method:"감자전분이나 감자가루로 반죽을 만들고 소를 넣어 송편 모양으로 빚은 뒤 찐다."},
+{name:"칡떡",category:"떡",feature:"칡을 이용해 향과 독특한 색을 내는 전통 떡이다.",method:"칡가루와 쌀가루를 섞어 반죽하고 찜기에 넣어 쪄낸다."},
+{name:"도토리떡",category:"떡",feature:"도토리가루를 넣어 고소한 맛과 갈색빛을 내는 떡이다.",method:"도토리가루와 쌀가루를 섞어 반죽한 뒤 찜기에 넣어 쪄낸다."},
+{name:"호박떡",category:"떡",feature:"호박의 달콤한 맛과 노란색이 특징이다.",method:"호박을 익혀 으깬 뒤 쌀가루와 섞어 찜기에 넣고 쪄낸다."},
+{name:"대추떡",category:"떡",feature:"대추의 달콤한 맛과 향을 즐길 수 있는 떡이다.",method:"대추를 잘게 썰어 쌀가루와 섞고 찜기에 넣어 쪄낸다."},
+{name:"밤떡",category:"떡",feature:"밤의 고소하고 달콤한 맛이 특징이다.",method:"밤을 삶아 잘게 썰거나 으깨 쌀가루와 섞은 뒤 쪄낸다."},
+{name:"콩떡",category:"떡",feature:"콩을 넣어 고소하고 담백한 맛을 내는 떡이다.",method:"불린 콩과 쌀가루를 함께 준비해 섞은 뒤 찜기에 넣어 쪄낸다."},
+{name:"팥떡",category:"떡",feature:"팥의 고소하고 달콤한 맛이 특징이다.",method:"쌀가루와 삶은 팥을 섞거나 층층이 올린 뒤 쪄낸다."},
+{name:"찰떡",category:"떡",feature:"찹쌀을 사용해 쫀득하고 탄력 있는 식감이 특징이다.",method:"찹쌀을 불려 찐 뒤 충분히 치대고 원하는 모양으로 만든다."},
+{name:"메떡",category:"떡",feature:"멥쌀을 이용해 비교적 담백하고 부드러운 식감이 특징이다.",method:"멥쌀가루에 물을 섞어 반죽한 뒤 찜기에 넣어 익힌다."},
+{name:"가피떡",category:"떡",feature:"콩이나 팥 등의 재료를 이용해 만드는 전통 떡이다.",method:"쌀가루 반죽에 소를 넣어 모양을 만든 뒤 찜기에 쪄낸다."},
+{name:"잡과병",category:"떡",feature:"여러 가지 과일과 견과류를 넣어 만드는 궁중식 떡이다.",method:"쌀가루에 대추, 밤, 잣 등의 재료를 섞고 찜기에 넣어 쪄낸다."},
+{name:"석이병",category:"떡",feature:"석이버섯을 이용해 독특한 향과 색을 내는 전통 떡이다.",method:"석이버섯을 잘게 다져 쌀가루와 섞은 뒤 찜기에 넣어 쪄낸다."},
+{name:"승검초단자",category:"떡",feature:"승검초를 넣어 향긋한 맛을 내고 고물을 묻혀 먹는 떡이다.",method:"찹쌀가루와 승검초를 섞어 반죽하고 소를 넣어 빚은 뒤 익혀 고물을 묻힌다."},
+{name:"대추단자",category:"떡",feature:"대추를 이용해 달콤하고 향긋한 맛을 내는 단자이다.",method:"찹쌀가루에 대추를 섞어 반죽하고 소를 넣어 빚은 뒤 고물을 묻힌다."},
+{name:"유자단자",category:"떡",feature:"유자의 향긋하고 상큼한 향이 특징이다.",method:"찹쌀가루와 유자 재료를 섞어 반죽하고 둥글게 빚은 뒤 고물을 묻힌다."},
+{name:"율무단자",category:"떡",feature:"율무를 이용해 담백하고 고소한 맛을 내는 떡이다.",method:"율무가루와 찹쌀가루를 섞어 반죽한 뒤 둥글게 빚어 익힌다."},
+{name:"송기떡",category:"떡",feature:"소나무 껍질의 안쪽 부분을 이용해 만드는 전통 떡이다.",method:"손질한 송기를 쌀가루와 섞어 반죽한 뒤 떡 모양으로 만들어 쪄낸다."},
+{name:"모시송편",category:"떡",feature:"모싯잎을 넣어 초록색과 향긋한 맛을 내는 송편이다.",method:"모싯잎을 삶아 갈아 쌀가루와 반죽하고 소를 넣어 송편 모양으로 빚은 뒤 찐다."},
+{name:"단호박설기",category:"떡",feature:"단호박의 달콤한 맛과 노란색이 특징이다.",method:"단호박을 익혀 으깬 뒤 멥쌀가루와 섞고 찜기에 넣어 쪄낸다."},
+{name:"꿀설기",category:"떡",feature:"쌀가루에 꿀을 더해 달콤하고 부드러운 맛이 특징이다.",method:"멥쌀가루에 꿀과 물을 넣어 섞은 뒤 찜기에 넣어 쪄낸다."},
+{name:"삼색설기",category:"떡",feature:"서로 다른 색의 설기를 층층이 쌓아 만든다.",method:"쌀가루를 여러 색으로 나눈 뒤 층층이 담아 찜기에 넣어 찐다."},
+{name:"약식단자",category:"떡",feature:"약식의 재료와 단자의 형태를 결합한 전통 떡이다.",method:"찹쌀과 대추, 밤 등을 익혀 반죽한 뒤 작게 빚어 고물을 묻힌다."},
+{name:"과편",category:"한과",feature:"과일의 색과 향을 살려 굳혀 만드는 전통 후식이다.",method:"과일즙을 끓인 뒤 녹말이나 한천 등을 넣어 굳히고 먹기 좋은 크기로 자른다."},
+{name:"살구편",category:"한과",feature:"살구의 새콤달콤한 맛과 향을 살린 과편이다.",method:"살구를 익혀 즙이나 과육을 만든 뒤 설탕과 함께 끓이고 굳힌다."},
+{name:"앵두편",category:"한과",feature:"앵두의 붉은색과 새콤한 맛이 특징이다.",method:"앵두를 으깨 즙을 낸 뒤 설탕과 함께 끓여 굳힌다."},
+{name:"모과편",category:"한과",feature:"모과의 향긋한 향과 달콤한 맛이 특징이다.",method:"모과를 삶아 으깬 뒤 설탕과 함께 끓이고 굳혀 만든다."},
+{name:"국화전",category:"전통 후식",feature:"국화꽃을 올려 아름답게 장식하는 전통 음식이다.",method:"찹쌀가루 반죽을 얇게 펴서 기름에 지지고 식용 국화꽃을 올린다."},
+{name:"매화전",category:"전통 후식",feature:"매화꽃 모양으로 장식해 봄의 분위기를 나타내는 음식이다.",method:"찹쌀가루 반죽을 작게 빚어 지진 뒤 매화 모양의 꽃을 올린다."},
+{name:"진달래화전",category:"전통 후식",feature:"진달래꽃을 올려 분홍빛이 아름다운 화전이다.",method:"찹쌀가루 반죽을 얇게 만들어 지지고 식용 진달래꽃을 올린다."},
+{name:"장미화전",category:"전통 후식",feature:"장미꽃을 이용해 아름답게 장식한 화전이다.",method:"찹쌀 반죽을 작게 펴서 지진 뒤 식용 장미꽃잎을 올린다."},
+{name:"수수전",category:"전통 후식",feature:"수수가루를 이용해 고소한 맛을 내는 전이다.",method:"수수가루에 물을 넣어 반죽하고 얇게 펴서 기름에 지진다."},
+{name:"빈대떡",category:"전통 음식",feature:"녹두를 갈아 만드는 고소한 전으로 간식처럼 먹기도 한다.",method:"불린 녹두를 갈아 반죽하고 채소 등을 넣어 기름에 노릇하게 부친다."},
+{name:"녹두전",category:"전통 음식",feature:"녹두의 고소한 맛과 바삭한 겉면이 특징이다.",method:"불린 녹두를 갈아 반죽한 뒤 재료를 넣고 기름에 부친다."},
+{name:"메밀전병",category:"전통 음식",feature:"메밀로 얇은 전을 만들고 속재료를 넣어 말아 먹는다.",method:"메밀가루로 묽은 반죽을 만들어 얇게 부친 뒤 속재료를 넣고 돌돌 만다."},
+{name:"찰수수부꾸미",category:"떡",feature:"찰수수의 쫀득함과 팥소의 달콤함이 특징이다.",method:"찰수수가루로 반죽을 만들어 팥소를 넣고 납작하게 빚은 뒤 기름에 지진다."},
+{name:"오미자편",category:"한과",feature:"오미자의 붉은색과 새콤달콤한 맛이 특징이다.",method:"오미자를 우려낸 물에 설탕과 녹말 등을 넣고 끓인 뒤 굳혀서 자른다."},
+{name:"배편",category:"한과",feature:"배의 달콤하고 은은한 향을 이용해 만든 전통 후식이다.",method:"배를 갈아 즙을 낸 뒤 설탕과 함께 끓이고 굳혀 먹기 좋은 크기로 자른다."},
+{name:"호두정과",category:"정과",feature:"호두의 고소함과 꿀 또는 조청의 달콤함이 어우러진다.",method:"호두를 손질해 꿀이나 조청에 넣고 약한 불에서 졸인다."},
+{name:"인삼정과",category:"정과",feature:"인삼을 달콤하게 졸여 인삼 특유의 향을 살린다.",method:"인삼을 깨끗하게 손질해 삶은 뒤 꿀이나 조청에 넣어 천천히 졸인다."},
+{name:"도라지강정",category:"한과",feature:"도라지를 튀겨 조청을 입혀 바삭하고 달콤하게 만든다.",method:"도라지를 손질해 튀긴 뒤 조청을 묻혀 굳힌다."},
+{name:"연근강정",category:"한과",feature:"연근의 바삭한 식감과 달콤한 조청 맛이 특징이다.",method:"연근을 얇게 썰어 튀긴 뒤 조청에 버무린다."},
+{name:"대추강정",category:"한과",feature:"대추의 달콤함과 견과류의 고소함을 함께 즐길 수 있다.",method:"대추를 손질하고 견과류와 함께 조청에 버무려 굳힌다."},
+{name:"깨엿",category:"엿",feature:"엿의 달콤함과 깨의 고소함이 어우러진 전통 간식이다.",method:"엿을 녹여 볶은 깨를 섞은 뒤 굳혀 먹기 좋은 크기로 자른다."},
+{name:"콩엿",category:"엿",feature:"볶은 콩과 엿을 함께 만들어 고소하고 달콤하다.",method:"볶은 콩에 녹인 엿을 섞고 틀에 넣어 굳힌다."},
+{name:"호박엿",category:"엿",feature:"호박을 이용해 달콤한 맛과 은은한 호박 향을 내는 엿이다.",method:"호박을 익혀 즙을 낸 뒤 엿기름과 함께 달여 엿을 만든다."},
+{name:"쌀엿",category:"엿",feature:"쌀을 기본 재료로 만들어 달콤하고 쫀득한 식감이 특징이다.",method:"쌀로 밥을 지은 뒤 엿기름을 이용해 당화시키고 오랫동안 졸여 엿을 만든다."},
+{name:"오메기떡",category:"떡",feature:"제주도 좁쌀로 만들어 쫀득하고 구수한 맛이 나는 향토떡이다.",method:"좁쌀가루를 반죽해 쪄서 치댄 뒤 팥고물을 묻힌다."},
+{name:"빙떡",category:"떡",feature:"메밀가루 전병에 무나물을 말아 넣은 제주 향토 떡이다.",method:"메밀가루 반죽을 얇게 부쳐 채 썬 무나물을 넣고 돌돌 만다."},
+{name:"노티",category:"떡",feature:"차조와 기장 등으로 만들어 쉽게 상하지 않는 북부 지방 향토 떡이다.",method:"차조 반죽을 지진 뒤 엿기름물에 삭혀 노릇하게 다시 지진다."},
+{name:"수수경단",category:"떡",feature:"수수가루로 빚어 붉은빛이 돌며 액막이 음식으로도 쓰였다.",method:"수수가루 반죽을 동그랗게 빚어 삶은 뒤 고물을 묻힌다."},
+{name:"원소병",category:"전통음료·후식",feature:"찹쌀 경단을 꿀물에 띄워 먹는 궁중 후식이다.",method:"오색 찹쌀 경단을 빚어 삶은 뒤 꿀물이나 오미자물에 띄운다."},
+{name:"떡수단",category:"전통음료",feature:"가래떡을 잘라 꿀물에 띄운 여름철 시원한 후식이다.",method:"가래떡을 작게 썰어 데친 뒤 꿀물이나 오미자물에 띄운다."},
+{name:"밤초",category:"한과",feature:"밤을 통째로 졸여 만들어 달콤하고 형태가 그대로 살아 있다.",method:"밤을 삶아 속껍질을 벗긴 뒤 꿀이나 설탕물에 졸인다."},
+{name:"대추초",category:"한과",feature:"대추를 통째로 졸여 만들어 쫀득하고 달콤하다.",method:"대추씨를 뺀 뒤 꿀에 넣고 졸여 잣을 박아 마무리한다."},
+{name:"율란",category:"한과",feature:"삶은 밤을 으깨 다시 밤 모양으로 빚어 만드는 궁중 과자이다.",method:"삶은 밤을 곱게 으깨 꿀과 계핏가루를 섞어 밤 모양으로 빚는다."},
+{name:"조란",category:"한과",feature:"대추를 으깨 다시 대추 모양으로 빚어 만드는 궁중 과자이다.",method:"대추를 삶아 씨를 빼고 곱게 다진 뒤 꿀과 섞어 대추 모양으로 빚는다."},
+{name:"생란",category:"한과",feature:"생강즙을 넣어 알싸한 향이 나는 궁중 과자이다.",method:"마 반죽에 생강즙과 꿀을 섞어 빚어낸다."},
+{name:"은행알쌈",category:"한과",feature:"은행을 대추 과육으로 감싸 만든 작고 귀여운 과자이다.",method:"볶은 은행을 얇게 편 대추 과육으로 돌돌 감싸 마무리한다."},
+{name:"잣박산",category:"한과",feature:"잣을 엿에 버무려 얇게 굳힌 고소한 과자이다.",method:"잣을 녹인 엿과 버무려 얇게 편 뒤 굳혀서 자른다."},
+{name:"깨엿강정",category:"한과",feature:"깨와 엿을 함께 굳혀 고소하고 진한 단맛이 난다.",method:"볶은 깨를 녹인 엿과 섞어 판에 펴 굳힌 뒤 자른다."},
+{name:"편강",category:"정과",feature:"생강을 얇게 저며 설탕에 조려 말린 알싸한 간식이다.",method:"생강을 얇게 썰어 데친 뒤 설탕에 조리고 말려 마무리한다."},
+{name:"은행정과",category:"정과",feature:"은행을 꿀이나 설탕에 졸여 만든 고소한 간식이다.",method:"볶은 은행을 꿀이나 설탕물에 졸여 만든다."},
+{name:"배정과",category:"정과",feature:"배를 조려 만들어 은은한 단맛과 향이 난다.",method:"배를 저며 꿀이나 설탕물에 서서히 졸인다."},
+{name:"감떡",category:"떡",feature:"곶감이나 감을 넣어 달콤한 맛을 내는 떡이다.",method:"감을 잘게 썰거나 으깨 쌀가루와 섞어 쪄낸다."},
+{name:"호박고지떡",category:"떡",feature:"말린 호박고지를 넣어 쫄깃하고 달콤한 맛이 난다.",method:"말린 호박고지를 불려 쌀가루와 섞어 찜기에 쪄낸다."},
+{name:"무시루떡",category:"떡",feature:"무를 채 썰어 넣어 시원하고 담백한 맛이 난다.",method:"채 썬 무와 쌀가루를 켜켜이 놓고 시루에 쪄낸다."},
+{name:"감자떡",category:"떡",feature:"감자녹말을 이용해 쫀득한 식감을 내는 강원도 향토떡이다.",method:"감자녹말 반죽에 소를 넣고 빚어 삶거나 쪄낸다."},
+{name:"콩설기",category:"떡",feature:"콩을 섞어 고소한 맛을 더한 설기이다.",method:"불린 콩을 멥쌀가루에 섞어 찜기에 쪄낸다."},
+{name:"밤설기",category:"떡",feature:"밤을 넣어 달콤하고 포슬한 맛을 내는 설기이다.",method:"삶은 밤을 쌀가루와 섞어 찜기에 쪄낸다."},
+{name:"잣설기",category:"떡",feature:"잣을 올려 고소한 향을 더한 설기이다.",method:"멥쌀가루에 잣을 올려 찜기에 쪄낸다."},
+{name:"쑥인절미",category:"떡",feature:"쑥을 넣어 향긋하고 초록빛이 도는 인절미이다.",method:"쑥을 섞은 찹쌀을 쪄서 치댄 뒤 콩고물을 묻힌다."},
+{name:"흑임자인절미",category:"떡",feature:"검은깨 고물을 묻혀 고소하고 짙은 색을 내는 인절미이다.",method:"찹쌀을 쪄서 치댄 뒤 흑임자 고물을 묻힌다."}
+];
+
+const SPOTS = [
+  {name:"낙원떡집 (서울 낙원동)", addr:"100년 넘게 이어온 떡집, 두텁떡·오색경단으로 유명"},
+  {name:"경기떡집 (서울 망원동)", addr:"30년 넘게 자리를 지킨 이북식 인절미 명가"},
+  {name:"거북이한과 (제주 서귀포)", addr:"얇은 반죽을 겹겹이 쌓아 튀긴 약과로 유명"},
+  {name:"버들골 약과 (강원 춘천)", addr:"3대째 이어온 페스츄리 식감의 약과"},
+  {name:"궁중본영의정인절미떡집 (경기 파주)", addr:"2대째 이어가는 전통 인절미 전문점"}
+];
+
+const CAT_COLORS = {
+  "한과":"var(--dahong)","정과":"var(--song)","떡":"var(--cheong)","엿":"var(--yuja)",
+  "전통음료":"var(--cheong)","전통음료·후식":"var(--cheong)","전통 후식":"var(--yuja)","전통 음식":"var(--dahong)"
+};
+
+const main = document.getElementById('dictList');
+const catNav = document.getElementById('catNav');
+const countBadge = document.getElementById('countBadge');
+const countLine = document.getElementById('countLine');
+const searchInput = document.getElementById('search');
+const overlay = document.getElementById('overlay');
+const dropCard = document.getElementById('dropCard');
+const spotList = document.getElementById('spotList');
+
+let activeCat = null;
+
+function renderSpots(){
+  spotList.innerHTML = SPOTS.map(s=>`<div class="spot-item"><span class="sname">${s.name}</span><span class="saddr">${s.addr}</span></div>`).join('');
+}
+
+function closeCard(){
+  dropCard.classList.remove('show');
+  overlay.classList.remove('show');
+}
+
+function openCard(item){
+  const color = CAT_COLORS[item.category] || 'var(--dahong)';
+  dropCard.style.borderColor = color;
+  let extra = '';
+  if(item.art){ extra += `<div class="block">${item.art}</div>`; }
+  if(item.history){ extra += `<div class="block"><div class="field-label" style="color:${color}">유래</div><div class="field-value">${item.history}</div></div>`; }
+  if(item.pair){ extra += `<div class="block"><div class="field-label" style="color:${color}">같이 먹으면 좋은 것</div><div class="field-value">${item.pair}</div></div>`; }
+  dropCard.innerHTML = `
+    <div class="dc-head">
+      <div><h3>${item.name}</h3><div class="dc-cat">${item.category}</div></div>
+      <button class="close-x" type="button" id="dcClose">닫기</button>
+    </div>
+    <div class="block"><div class="field-label" style="color:${color}">만드는 법</div><div class="field-value">${item.method}</div></div>
+    <div class="block"><div class="field-label" style="color:${color}">재료·맛의 특징</div><div class="field-value">${item.feature}</div></div>
+    ${extra}
+  `;
+  overlay.classList.add('show');
+  requestAnimationFrame(()=> dropCard.classList.add('show'));
+  document.getElementById('dcClose').addEventListener('click', closeCard);
+}
+
+overlay.addEventListener('click', closeCard);
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeCard(); });
+
+function koSort(a,b){ return a.name.localeCompare(b.name,'ko'); }
+
+function render(){
+  const q = searchInput.value.trim();
+  let list = [...DATA];
+  if(activeCat) list = list.filter(it=>it.category===activeCat);
+  if(q) list = list.filter(it=>it.name.includes(q)||it.category.includes(q));
+  list.sort(koSort);
+
+  countBadge.innerHTML = `<b>${list.length}</b> / ${DATA.length}가지`;
+  countLine.textContent = activeCat ? `“${activeCat}” 분류` : '전체 가나다순';
+
+  if(list.length===0){
+    main.innerHTML = `<div class="empty-msg">‘${q}’와 어울리는 간식을 찾지 못했습니다.</div>`;
+    return;
+  }
+
+  main.innerHTML = list.map((item,i)=>{
+    const color = CAT_COLORS[item.category] || 'var(--dahong)';
+    return `<button type="button" class="entry" style="--cat-color:${color}" data-name="${item.name}">
+      <span class="left">
+        <span class="idx">${String(i+1).padStart(2,'0')}</span>
+        <span class="name">${item.name}</span>
+        <span class="feat">${item.feature}</span>
+      </span>
+      <span class="cat">${item.category}</span>
+    </button>`;
+  }).join('');
+
+  main.querySelectorAll('.entry').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const item = DATA.find(d=>d.name===el.dataset.name);
+      openCard(item);
+    });
+  });
+}
+
+function buildNav(){
+  const cats = [...new Set(DATA.map(d=>d.category))];
+  catNav.innerHTML = '<button type="button" data-cat="" class="active">전체</button>' +
+    cats.map(c=>`<button type="button" data-cat="${c}">${c}</button>`).join('');
+  catNav.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      activeCat = btn.dataset.cat || null;
+      catNav.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      render();
+    });
+  });
+}
+
+searchInput.addEventListener('input', render);
+
+renderSpots();
+buildNav();
+render();
+</script>
+</body>
+</html>
